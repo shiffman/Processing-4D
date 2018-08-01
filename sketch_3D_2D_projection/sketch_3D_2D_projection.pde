@@ -2,31 +2,42 @@
 float angleX = 0;
 float angleY = 0;
 float angleZ = 0;
-PVector v1 = new PVector(-100, -100, 0);
-PVector v2 = new PVector(100, -100, 0);
-PVector v3 = new PVector(100, 100, 0);
-PVector v4 = new PVector(-100, 100, 0);
+PVector[] cube;
+
+PVector[] makeCube(float r) {
+  PVector[] cube = new PVector[8];
+  int index = 0;
+  for (int x = 0; x < 2; x++) {
+    for (int y = 0; y < 2; y++) {
+      for (int z = 0; z < 2; z++) {
+        cube[index] = new PVector((x-0.5)*r, (y-0.5)*r, (z-0.5)*r);
+        index++;
+      }
+    }
+  }
+  return cube;
+}
 
 void setup() {
-  size(640, 480);
+  size(640, 480, P2D);
+  cube = makeCube(100);
 }
+
 
 void draw() {
   background(0);
   translate(width/2, height/2);
   strokeWeight(4);
   stroke(255);
-  PVector p1 = project2d(v1);
-  PVector p2 = project2d(v2);
-  PVector p3 = project2d(v3);
-  PVector p4 = project2d(v4);
-  line(p1.x, p1.y, p2.x, p2.y);
-  line(p2.x, p2.y, p3.x, p3.y);
-  line(p3.x, p3.y, p4.x, p4.y);
-  line(p4.x, p4.y, p1.x, p1.y);
+
+  for (PVector v : cube) {
+    PVector p = project2d(v); 
+    point(p.x, p.y);
+  }
+
   angleX += 0.03;
-  angleY += 0.03;
-  angleZ += 0.03;
+  angleY += 0.023;
+  angleZ += 0.01234;
 }
 
 
