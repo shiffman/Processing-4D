@@ -1,5 +1,5 @@
 
-float angle1,angle2 = 0;
+float angle1, angle2 = 0;
 P4Vector[][][][] cube;
 
 P4Vector[][][][] makeCube4(float r) {
@@ -48,9 +48,9 @@ void draw() {
       }
     }
   }
-  
+
   strokeWeight(1);
- 
+
   angle1 += 0.03;
   angle2 += 0.012;
 }
@@ -63,22 +63,24 @@ PVector project3d(P4Vector v) {
     {0, 0, 1, 0}, 
     });
 
-  Matrix rotation1 = new Matrix(new float[][] {
-    {1, 0, 0, 0}, 
-    {0, 1, 0, 0}, 
-    {0, 0, cos(angle2), -sin(angle2)}, 
-    {0, 0, sin(angle2), cos(angle2)}, 
-    });
 
-  Matrix rotation2 = new Matrix(new float[][] {
+  Matrix rotationXY = new Matrix(new float[][] {
     {cos(angle1), -sin(angle1), 0, 0}, 
     {sin(angle1), cos(angle1), 0, 0}, 
     {0, 0, 1, 0}, 
     {0, 0, 0, 1}, 
     });
 
+  Matrix rotationZW = new Matrix(new float[][] {
+    {1, 0, 0, 0}, 
+    {0, 1, 0, 0}, 
+    {0, 0, cos(angle2), -sin(angle2)}, 
+    {0, 0, sin(angle2), cos(angle2)}, 
+    });
+
   Matrix p1 = new Matrix(new float[][] {{v.x}, {v.y}, {v.z}, {v.w}});
-  Matrix a1 = rotation2.mult(rotation1.mult(p1));
+  //Matrix a1 = rotation1.mult(p1);
+  Matrix a1 = rotationZW.mult(rotationXY.mult(p1));
   Matrix p2 = projection.mult(a1);
   return new PVector(p2.data[0][0], p2.data[1][0], p2.data[2][0]);
 }
