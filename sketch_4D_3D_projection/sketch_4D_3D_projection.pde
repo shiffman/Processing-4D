@@ -8,7 +8,7 @@ P4Vector[][][][] makeCube4(float r) {
     for (int y = 0; y < 2; y++) {
       for (int z = 0; z < 2; z++) {
         for (int w = 0; w < 2; w++) {
-          cube[x][y][z][w] = new P4Vector((x-0.5)*r, (y-0.5)*r, (z-0.5)*r, (w-0.5)*r*3);
+          cube[x][y][z][w] = new P4Vector((x-0.5)*r, (y-0.5)*r, (z-0.5)*r, (w-0.5)*r);
         }
       }
     }
@@ -18,15 +18,15 @@ P4Vector[][][][] makeCube4(float r) {
 
 void setup() {
   size(640, 480, P3D);
-  cube = makeCube4(100);
+  cube = makeCube4(150);
 }
 
 
 void draw() {
   background(0);
   translate(width/2, height/2);
-  rotateZ(angle1);
-  rotateX(angle1);
+  //rotateZ(angle1);
+  rotateY(angle1);
   strokeWeight(8);
   stroke(255);
 
@@ -56,8 +56,8 @@ void draw() {
   connections(projected3d);
 
 
-  angle1 += 0.007;
-  angle2 += 0.012;
+  angle1 += 0.015;
+  angle2 += 0.015;
 }
 
 
@@ -68,18 +68,32 @@ PVector project3d(P4Vector v) {
     {0, 0, 1, 0}, 
     });
 
+  //Matrix rotationZX = new Matrix(new float[][] {
+  //  { cos(angle2), 0, 0, -sin(angle1)}, 
+  //  {0, 1, 0, 0}, 
+  //  {0, 0, 1, 0}, 
+  //  {sin(angle2), 0, 0, cos(angle2)}, 
+  //  });
 
 
-  Matrix rotationZY = new Matrix(new float[][] {
+  //Matrix rotationZY = new Matrix(new float[][] {
+  //  {1, 0, 0, 0}, 
+  //  {0, cos(angle2), 0, -sin(angle1)}, 
+  //  {0, 0, 1, 0}, 
+  //  {0, sin(angle2), 0, cos(angle2)}, 
+  //  });
+
+  Matrix rotationZW = new Matrix(new float[][] {
     {1, 0, 0, 0}, 
-    {0, cos(angle2), 0, -sin(angle1)}, 
-    {0, 0, 1, 0}, 
-    {0, sin(angle2), 0, cos(angle2)}, 
+    {0, 1, 0, 0}, 
+    {0, 0, cos(angle2), -sin(angle1)}, 
+    {0, 0, sin(angle2), cos(angle2)}
     });
 
   Matrix p1 = new Matrix(new float[][] {{v.x}, {v.y}, {v.z}, {v.w}});
   Matrix a1 = rotationZW.mult(p1);
-  //Matrix a1 = rotationZW.mult(rotationXY.mult(p1));
+  //a1 = rotationZX.mult(a1);
+  //a1 = rotationZY.mult(a1);
   Matrix p2 = projection.mult(a1);
   return new PVector(p2.data[0][0], p2.data[1][0], p2.data[2][0]);
 }
