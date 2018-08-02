@@ -18,7 +18,7 @@ P4Vector[][][][] makeCube4(float r) {
 
 void setup() {
   size(640, 480, P3D);
-  cube = makeCube4(150);
+  cube = makeCube4(1);
 }
 
 
@@ -62,10 +62,13 @@ void draw() {
 
 
 PVector project3d(P4Vector v) {
+
+  float temp_w = 1.0 / (1-v.w);
+
   Matrix projection = new Matrix(new float[][] {
-    {1, 0, 0, 0}, 
-    {0, 1, 0, 0}, 
-    {0, 0, 1, 0}, 
+    {temp_w, 0, 0, 0}, 
+    {0, temp_w, 0, 0}, 
+    {0, 0, temp_w, 0}, 
     });
 
   //Matrix rotationZX = new Matrix(new float[][] {
@@ -95,7 +98,9 @@ PVector project3d(P4Vector v) {
   //a1 = rotationZX.mult(a1);
   //a1 = rotationZY.mult(a1);
   Matrix p2 = projection.mult(a1);
-  return new PVector(p2.data[0][0], p2.data[1][0], p2.data[2][0]);
+  PVector result = new PVector(p2.data[0][0], p2.data[1][0], p2.data[2][0]);
+  result.mult(100);
+  return result;
 }
 
 
