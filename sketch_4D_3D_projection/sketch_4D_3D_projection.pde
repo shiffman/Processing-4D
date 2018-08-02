@@ -69,7 +69,7 @@ PVector project3d(P4Vector v) {
     });
 
   //Matrix rotationZX = new Matrix(new float[][] {
-  //  { cos(angle2), 0, 0, -sin(angle1)}, 
+  //  { cos(angle2), 0, 0, -sin(angle2)}, 
   //  {0, 1, 0, 0}, 
   //  {0, 0, 1, 0}, 
   //  {sin(angle2), 0, 0, cos(angle2)}, 
@@ -78,7 +78,7 @@ PVector project3d(P4Vector v) {
 
   //Matrix rotationZY = new Matrix(new float[][] {
   //  {1, 0, 0, 0}, 
-  //  {0, cos(angle2), 0, -sin(angle1)}, 
+  //  {0, cos(angle2), 0, -sin(angle2)}, 
   //  {0, 0, 1, 0}, 
   //  {0, sin(angle2), 0, cos(angle2)}, 
   //  });
@@ -86,7 +86,7 @@ PVector project3d(P4Vector v) {
   Matrix rotationZW = new Matrix(new float[][] {
     {1, 0, 0, 0}, 
     {0, 1, 0, 0}, 
-    {0, 0, cos(angle2), -sin(angle1)}, 
+    {0, 0, cos(angle2), -sin(angle2)}, 
     {0, 0, sin(angle2), cos(angle2)}
     });
 
