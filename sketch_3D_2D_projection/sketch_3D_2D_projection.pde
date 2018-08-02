@@ -19,7 +19,7 @@ PVector[][][] makeCube(float r) {
 }
 
 void setup() {
-  size(640, 480);
+  size(640, 480, P2D);
   cube = makeCube(100);
 }
 
@@ -27,7 +27,7 @@ void setup() {
 void draw() {
   background(0);
   translate(width/2, height/2);
-  strokeWeight(4);
+  strokeWeight(1);
   stroke(255);
 
   PVector[][][] projected2d = new PVector[2][2][2];
